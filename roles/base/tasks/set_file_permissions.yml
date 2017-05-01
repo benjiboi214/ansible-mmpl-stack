@@ -1,0 +1,25 @@
+---
+
+- name: Setup 0755 Directories.
+  file:
+    path: "{{ item }}"
+    recurse: yes
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_group }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ nginx_static_dir }}"
+    - "{{ nginx_media_dir }}"
+    - "{{ site_template_path }}"
+
+- name: Setup 0770 Directories.
+  file:
+    path: "{{ item }}"
+    recurse: yes
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_group }}"
+    state: directory
+    mode: 0770
+  with_items:
+    - "{{ application_log_dir }}"

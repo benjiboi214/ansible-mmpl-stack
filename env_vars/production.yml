@@ -1,0 +1,62 @@
+---
+# Commented options are defaults in role/defaults/main.yml or from source
+# package... Can be uncommented and changed
+
+
+# Application settings.
+project_env: production
+project_path: "/var/www/{{ application_name }}/{{ project_env }}"
+application_log_dir: "/var/log/{{ application_name }}"
+site_path: "{{ project_path }}/site"
+site_template_path: "{{ site_path }}/{{ application_name }}/templates"
+virtualenv_path: "{{ project_path }}/venv"
+requirements_file: "{{ project_path }}/requirements.txt"
+
+
+# Application admin email (For contact)
+app_admin_email: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  35633237636632313364666139663532333137303930633166356439613938643635663663643364
+  6431373661653930333733333163623239363932323137390a393265333762376661613461356365
+  64343762656166346339636364326533653230653364396230616435643434343731643632373365
+  6434343537366534340a613963626635306564643331653061393936383736643134663262646136
+  63643161643764663863626261383463623438393132326361656166613763653235
+
+
+# Certbot settings
+certbot_admin_email: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  63666365623732376462643837386164326435383435323333326362306435366538633733313062
+  3132613633346564393635396361393037646236393063610a383963373766313130373264613266
+  63346230383738613831386332653364343638383261373962366634633234316332303335616261
+  3435623239313136390a613933333833326563306166383139376436356665343237363032396631
+  35386633663536313466313664353536306630343132303333306365323864623061
+
+
+# Nginx settings.
+static_base: "/media/{{ application_name }}/{{ project_env }}"
+nginx_static_dir: "{{ static_base }}/static/"
+nginx_media_dir: "{{ static_base }}/media/"
+nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
+nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"
+
+
+# Letsencrypt toggle. Use if certbot enabled.
+nginx_use_letsencrypt: yes
+
+
+# Webapp settings.
+webapp_user: "{{ application_name }}"
+webapp_group: webapps
+
+
+# Django environment variables.
+# django_environment:
+#   DJANGO_SETTINGS_MODULE: "{{ django_settings_file }}"
+#   DJANGO_SECRET_KEY: "{{ django_secret_key }}"
+#   MEDIA_ROOT: "{{ nginx_media_dir }}"
+#   STATIC_ROOT: "{{ nginx_static_dir }}"
+#   DATABASE_NAME: "{{ db_name }}"
+#   DATABASE_USER: "{{ db_user }}"
+#   DATABASE_PASSWORD: "{{ db_password }}"
+#   BROKER_URL: "{{ broker_url }}"

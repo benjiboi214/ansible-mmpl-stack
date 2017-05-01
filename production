@@ -1,0 +1,7 @@
+# production
+
+[webservers]
+ansible.bennyda.ninja
+
+[webservers:vars]
+env=production

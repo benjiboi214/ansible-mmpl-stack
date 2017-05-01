@@ -1,0 +1,11 @@
+---
+
+# Git Repo
+git_repo: https://github.com/benjiboi214/mmpl-wagtail.git
+
+# Project Name
+project_name: mmpl-site
+application_name: mmpl
+
+# Date / Time settings
+timezone: Australia/Melbourne
