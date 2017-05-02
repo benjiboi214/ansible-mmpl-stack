@@ -2,8 +2,10 @@
 # Commented options are defaults in role/defaults/main.yml or from source
 # package... Can be uncommented and changed
 
+# Run from cmd: ansible-playbook --vault-password-file secrets/vault_password.txt -i production -v webservers.yml
 
-# Application settings.
+
+# Application settings. (base)
 project_env: production
 project_path: "/var/www/{{ application_name }}/{{ project_env }}"
 application_log_dir: "/var/log/{{ application_name }}"
@@ -13,7 +15,7 @@ virtualenv_path: "{{ project_path }}/venv"
 requirements_file: "{{ project_path }}/requirements.txt"
 
 
-# Application admin email (For contact)
+# Application admin email (base)
 app_admin_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   35633237636632313364666139663532333137303930633166356439613938643635663663643364
@@ -23,7 +25,16 @@ app_admin_email: !vault |
   63643161643764663863626261383463623438393132326361656166613763653235
 
 
-# Certbot settings
+# Swap file settings (base)
+create_swap_file: yes
+
+
+# Webapp settings (base|$webapp)
+webapp_user: "{{ application_name }}"
+webapp_group: webapps
+
+
+# Certbot settings (certbot)
 certbot_admin_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   63666365623732376462643837386164326435383435323333326362306435366538633733313062
@@ -33,7 +44,11 @@ certbot_admin_email: !vault |
   35386633663536313466313664353536306630343132303333306365323864623061
 
 
-# Nginx settings.
+# Letsencrypt toggle. Use if certbot enabled. (certbot)
+nginx_use_letsencrypt: yes
+
+
+# Nginx settings (nginx)
 static_base: "/media/{{ application_name }}/{{ project_env }}"
 nginx_static_dir: "{{ static_base }}/static/"
 nginx_media_dir: "{{ static_base }}/media/"
@@ -41,13 +56,16 @@ nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
 nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"
 
 
-# Letsencrypt toggle. Use if certbot enabled.
-nginx_use_letsencrypt: yes
-
-
-# Webapp settings.
-webapp_user: "{{ application_name }}"
-webapp_group: webapps
+# DB settings (postgres)
+db_user: postgres
+db_group: postgres
+db_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  39663762303831656230373537653265303438646532396165613339303731623835306261356231
+  6334343361633834643738376562343333326438363964620a333864643231386161633462393463
+  64353737653630306163353137343866363437663739663934623164396661373337636562376362
+  6635356537336666390a616661663133643532356532653539663264396562323731633663633338
+  35306431643031646163653634393865356666393433353432303732353361373639
 
 
 # Django environment variables.
