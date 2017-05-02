@@ -17,7 +17,7 @@
   with_items:
     - "404"
     - "500"
-    - "maintenance"
+    - "maintenance_off"
 
 - name: Ensure bash, OpenSSL, and libssl are the latest versions
   apt: name={{ item }} update_cache={{ update_apt_cache }} state=latest
