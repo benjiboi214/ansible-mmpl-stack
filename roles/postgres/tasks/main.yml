@@ -1,0 +1,34 @@
+---
+
+- name: ensure apt cache is up to date
+  apt: update_cache=yes
+
+- name: ensure packages are installed
+  apt: name={{item}}
+  with_items:
+      - python-pip
+      - python-dev
+      - libpq-dev
+      - postgresql
+      - postgresql-contrib
+      - python-psycopg2
+
+- name: ensure database is created
+  postgresql_db: name={{ application_name }}_{{ project_env }}
+  become: yes
+  become_user: "{{ db_user }}"
+
+- name: ensure user has access to database
+  postgresql_user: db={{ application_name }}_{{ project_env }} name={{ application_name }} password={{ db_password }} priv=ALL
+  become: yes
+  become_user: "{{ db_user }}"
+
+- name: ensure user does not have unnecessary privilege
+  postgresql_user: name={{ application_name }} role_attr_flags=NOSUPERUSER,NOCREATEDB
+  become: yes
+  become_user: "{{ db_user }}"
+
+- name: ensure no other user can access the database
+  postgresql_privs: db={{ application_name }}_{{ project_env }} role=PUBLIC type=database priv=ALL state=absent
+  become: yes
+  become_user: "{{ db_user }}"
