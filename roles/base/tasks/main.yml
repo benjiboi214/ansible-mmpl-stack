@@ -10,15 +10,6 @@
   when: create_swap_file
   tags: swap
 
-- name: Place 404, 500 and maintenance pages
-  template: src={{ item }}.j2
-            dest={{site_template_path}}/{{ item }}.html
-            backup=yes
-  with_items:
-    - "404"
-    - "500"
-    - "maintenance_off"
-
 - name: Ensure bash, OpenSSL, and libssl are the latest versions
   apt: name={{ item }} update_cache={{ update_apt_cache }} state=latest
   with_items:

@@ -1,0 +1,10 @@
+---
+
+- include: setup_git_repo.yml
+  tags: git
+
+- include: setup_virtualenv.yml
+  tags: virtualenv
+
+- include: setup_maintenance_pages.yml
+  tags: templates

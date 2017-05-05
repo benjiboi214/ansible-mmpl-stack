@@ -1,18 +1,5 @@
 ---
-# Commented options are defaults in role/defaults/main.yml or from source
-# package... Can be uncommented and changed
-
 # Run from cmd: ansible-playbook --vault-password-file secrets/vault_password.txt -i production -v webservers.yml
-
-
-# Application settings. (base)
-project_env: production
-project_path: "/var/www/{{ application_name }}/{{ project_env }}"
-application_log_dir: "/var/log/{{ application_name }}"
-site_path: "{{ project_path }}/site"
-site_template_path: "{{ site_path }}/{{ application_name }}/templates"
-virtualenv_path: "{{ project_path }}/venv"
-requirements_file: "{{ project_path }}/requirements.txt"
 
 
 # Application admin email (base)
@@ -23,15 +10,6 @@ app_admin_email: !vault |
   64343762656166346339636364326533653230653364396230616435643434343731643632373365
   6434343537366534340a613963626635306564643331653061393936383736643134663262646136
   63643161643764663863626261383463623438393132326361656166613763653235
-
-
-# Swap file settings (base)
-create_swap_file: yes
-
-
-# Webapp settings (base|$webapp)
-webapp_user: "{{ application_name }}"
-webapp_group: webapps
 
 
 # Certbot settings (certbot)
@@ -48,14 +26,6 @@ certbot_admin_email: !vault |
 nginx_use_letsencrypt: yes
 
 
-# Nginx settings (nginx)
-static_base: "/media/{{ application_name }}/{{ project_env }}"
-nginx_static_dir: "{{ static_base }}/static/"
-nginx_media_dir: "{{ static_base }}/media/"
-nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
-nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"
-
-
 # DB settings (postgres)
 db_user: postgres
 db_group: postgres
@@ -68,9 +38,15 @@ db_password: !vault |
   35306431643031646163653634393865356666393433353432303732353361373639
 
 
+# Git Repo settings (web)
+git_repo: https://github.com/benjiboi214/mmpl-wagtail.git
+git_branch: master
+setup_git_repo: yes
+
+
 # Django environment variables.
 # django_environment:
-#   DJANGO_SETTINGS_MODULE: "{{ django_settings_file }}"
+#   DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
 #   DJANGO_SECRET_KEY: "{{ django_secret_key }}"
 #   MEDIA_ROOT: "{{ nginx_media_dir }}"
 #   STATIC_ROOT: "{{ nginx_static_dir }}"

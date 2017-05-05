@@ -1,0 +1,20 @@
+---
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+  tags: packages
+
+- name: Create the virtualenv
+  command: virtualenv -p {{ virtualenv_python_version }} {{ virtualenv_path }}
+  args:
+    creates: "{{ virtualenv_path }}/bin/activate"
+
+- name: Make sure venv dir belongs to webapp user
+  file:
+    path: "{{ virtualenv_path }}"
+    recurse: yes
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_group }}"
+    state: directory
+    mode: 0755

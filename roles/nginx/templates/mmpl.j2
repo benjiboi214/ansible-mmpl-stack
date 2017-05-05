@@ -44,7 +44,7 @@ server {
     }
 
     location / {
-        if (-f {{ site_template_path }}/maintenance_on.html) {
+        if (-f {{ app_template_path }}/maintenance_on.html) {
             return 503;
         }
 
@@ -64,11 +64,11 @@ server {
     # Error pages
     error_page 500 502 504 /500.html;
     location = /500.html {
-        root {{ site_template_path }}/;
+        root {{ app_template_path }}/;
     }
 
     error_page 503 /maintenance_on.html;
     location = /maintenance_on.html {
-        root {{ site_template_path }}/;
+        root {{ app_template_path }}/;
     }
 }

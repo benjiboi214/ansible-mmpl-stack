@@ -16,3 +16,4 @@
     - certbot
     - nginx
     - postgres
+    - web
