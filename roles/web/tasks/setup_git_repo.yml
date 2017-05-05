@@ -10,8 +10,9 @@
 
 - name: Set git config to ignore file perm changes
   git_config:
+    repo: "{{ git_repo_path }}"
     name: core.filemode
-    scope: global
+    scope: local
     value: false
 
 - name: Make sure git repo dir belongs to webapp user

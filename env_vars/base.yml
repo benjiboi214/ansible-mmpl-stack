@@ -1,5 +1,13 @@
 ---
 
+# Nginx settings (nginx)
+static_base: "/media/{{ application_name }}/{{ project_env }}"
+nginx_static_dir: "{{ static_base }}/static/"
+nginx_media_dir: "{{ static_base }}/media/"
+nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
+nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"
+
+
 # Project Name (base)
 project_name: mmpl-site
 application_name: mmpl
@@ -16,7 +24,7 @@ application_log_dir: "/var/log/{{ application_name }}"
 git_repo_path: "{{ project_path }}/repo"
 app_template_path: "{{ project_path }}/templates"
 virtualenv_path: "{{ project_path }}/venv"
-requirements_file: "{{ project_path }}/requirements.txt"
+requirements_file: "{{ git_repo_path }}/site/requirements.txt"
 
 
 # Swap file settings (base)
@@ -26,11 +34,3 @@ create_swap_file: yes
 # Webapp settings (base|$webapp)
 webapp_user: "{{ application_name }}"
 webapp_group: webapps
-
-
-# Nginx settings (nginx)
-static_base: "/media/{{ application_name }}/{{ project_env }}"
-nginx_static_dir: "{{ static_base }}/static/"
-nginx_media_dir: "{{ static_base }}/media/"
-nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
-nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"

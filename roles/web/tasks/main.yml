@@ -8,3 +8,6 @@
 
 - include: setup_maintenance_pages.yml
   tags: templates
+
+- include: setup_django_app.yml
+  tags: django
