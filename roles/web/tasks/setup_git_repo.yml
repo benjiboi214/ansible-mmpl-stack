@@ -1,10 +1,12 @@
 ---
 
 - name: Setup the Git repo
-  git: repo={{ git_repo }}
-       version={{ git_branch }}
-       dest={{ git_repo_path }}
-       accept_hostkey=yes
+  git:
+    repo: "{{ git_repo }}"
+    version: "{{ git_branch }}"
+    dest: "{{ git_repo_path }}"
+    accept_hostkey: yes
+    force: true
   when: setup_git_repo is defined and setup_git_repo
   tags: git
 

@@ -1,0 +1,5 @@
+---
+
+emperor_vassals_dir: /etc/uwsgi/vassals
+emperor_ini_path: /etc/uwsgi
+emperor_log_dir: /var/log/uwsgi

@@ -1,0 +1,42 @@
+---
+
+- name: Install emperor uwsgi
+  pip:
+    name: uwsgi
+
+- name: Install uwsgi python plugin
+  apt:
+    name: uwsgi-plugin-python
+    state: present
+
+- name: Create uwsgi log directory
+  file:
+    path: /var/log/uwsgi
+    state: directory
+    mode: 0770
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_group }}"
+
+- name: Create uwsgi etc directory
+  file:
+    path: "{{ emperor_vassals_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Place emperor configuration
+  template:
+    src: emperor.ini
+    dest: "{{ emperor_ini_path }}/emperor.ini"
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart the uwsgi emperor
+
+- name: Setup systemd service file for the emperor
+  template:
+    src: systemd.service
+    dest: /etc/systemd/system/uwsgi.service
+    mode: 0644
+    owner: root
+    group: root
+  when: ansible_service_mgr == 'systemd'

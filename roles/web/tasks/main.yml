@@ -11,3 +11,6 @@
 
 - include: setup_django_app.yml
   tags: django
+
+- include: setup_uwsgi_ini.yml
+  tags: uwsgi

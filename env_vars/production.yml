@@ -1,6 +1,9 @@
 ---
 # Run from cmd: ansible-playbook --vault-password-file secrets/vault_password.txt -i production -v webservers.yml
 
+# Application env settings
+project_env: production
+
 
 # Application admin email (base)
 app_admin_email: !vault |

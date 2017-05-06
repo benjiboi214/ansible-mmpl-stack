@@ -18,7 +18,6 @@ timezone: Australia/Melbourne
 
 
 # Application settings. (base)
-project_env: production
 project_path: "/var/www/{{ application_name }}/{{ project_env }}"
 application_log_dir: "/var/log/{{ application_name }}"
 git_repo_path: "{{ project_path }}/repo"
@@ -34,3 +33,7 @@ create_swap_file: yes
 # Webapp settings (base|$webapp)
 webapp_user: "{{ application_name }}"
 webapp_group: webapps
+
+
+# uwsgi/nginx communication settings
+uwsgi_socket: /tmp/uwsgi_{{ application_name }}.socket

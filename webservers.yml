@@ -15,5 +15,6 @@
     - { role: base, create_swap_file: yes }
     - certbot
     - nginx
+    - uwsgi
     - postgres
     - web
