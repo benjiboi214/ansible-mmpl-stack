@@ -4,3 +4,29 @@
   pip:
     virtualenv: "{{ virtualenv_path }}"
     requirements: "{{ requirements_file }}"
+
+- name: Populate and place the django secrets file
+  template:
+    src: django_app_secrets.j2
+    dest: "{{ site_path }}/{{ application_name }}/settings/{{ project_env }}_secrets.py"
+    mode: 0755
+
+- name: Run Django database migrations
+  django_manage:
+    command: migrate
+    app_path: "{{ site_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+    settings: "{{ django_settings_file }}"
+  environment: "{{ django_environment }}"
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.migrate
+
+- name: Run Django collectstatic
+  django_manage:
+    command: collectstatic
+    app_path: "{{ site_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+    settings: "{{ django_settings_file }}"
+  environment: "{{ django_environment }}"
+  when: run_django_collectstatic is defined and run_django_collectstatic
+  tags: django.collectstatic

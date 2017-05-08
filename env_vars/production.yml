@@ -29,31 +29,12 @@ certbot_admin_email: !vault |
 nginx_use_letsencrypt: yes
 
 
-# DB settings (postgres)
-db_user: postgres
-db_group: postgres
-db_password: !vault |
-  $ANSIBLE_VAULT;1.1;AES256
-  39663762303831656230373537653265303438646532396165613339303731623835306261356231
-  6334343361633834643738376562343333326438363964620a333864643231386161633462393463
-  64353737653630306163353137343866363437663739663934623164396661373337636562376362
-  6635356537336666390a616661663133643532356532653539663264396562323731633663633338
-  35306431643031646163653634393865356666393433353432303732353361373639
-
-
 # Git Repo settings (web)
 git_repo: https://github.com/benjiboi214/mmpl-wagtail.git
 git_branch: master
 setup_git_repo: yes
 
 
-# Django environment variables.
-# django_environment:
-#   DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
-#   DJANGO_SECRET_KEY: "{{ django_secret_key }}"
-#   MEDIA_ROOT: "{{ nginx_media_dir }}"
-#   STATIC_ROOT: "{{ nginx_static_dir }}"
-#   DATABASE_NAME: "{{ db_name }}"
-#   DATABASE_USER: "{{ db_user }}"
-#   DATABASE_PASSWORD: "{{ db_password }}"
-#   BROKER_URL: "{{ broker_url }}"
+# Django app settings (web)
+run_django_db_migrations: yes
+run_django_collectstatic: yes

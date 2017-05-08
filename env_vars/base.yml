@@ -4,8 +4,9 @@
 static_base: "/media/{{ application_name }}/{{ project_env }}"
 nginx_static_dir: "{{ static_base }}/static/"
 nginx_media_dir: "{{ static_base }}/media/"
-nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
-nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"
+nginx_log_dir: "{{ application_log_dir }}/nginx"
+nginx_access_log_file: "{{ nginx_log_dir }}/nginx_access.log"
+nginx_error_log_file: "{{ nginx_log_dir }}/nginx_error.log"
 
 
 # Project Name (base)
@@ -20,10 +21,11 @@ timezone: Australia/Melbourne
 # Application settings. (base)
 project_path: "/var/www/{{ application_name }}/{{ project_env }}"
 application_log_dir: "/var/log/{{ application_name }}"
-git_repo_path: "{{ project_path }}/repo"
 app_template_path: "{{ project_path }}/templates"
 virtualenv_path: "{{ project_path }}/venv"
-requirements_file: "{{ git_repo_path }}/site/requirements.txt"
+git_repo_path: "{{ project_path }}/repo"
+site_path: "{{ git_repo_path }}/site"
+requirements_file: "{{ site_path }}/requirements.txt"
 
 
 # Swap file settings (base)
@@ -37,3 +39,22 @@ webapp_group: webapps
 
 # uwsgi/nginx communication settings
 uwsgi_socket: /tmp/uwsgi_{{ application_name }}.socket
+uwsgi_log_dir: "{{ application_log_dir }}/uwsgi"
+
+
+# Postgres settings
+db_user: postgres
+db_group: postgres
+db_app_user: "{{ application_name }}"
+db_name: "{{ application_name }}_{{ project_env }}"
+
+# Django environment settings
+django_settings_file: "{{ application_name }}.settings.{{ project_env }}"
+django_environment:
+  DJANGO_SETTINGS_MODULE: "{{ django_settings_file }}"
+  DJANGO_SECRET_KEY: "{{ django_secret_key }}"
+  MEDIA_ROOT: "{{ nginx_media_dir }}"
+  STATIC_ROOT: "{{ nginx_static_dir }}"
+  DATABASE_NAME: "{{ db_name }}"
+  DATABASE_USER: "{{ db_app_user }}"
+  DATABASE_PASSWORD: "{{ db_password }}"

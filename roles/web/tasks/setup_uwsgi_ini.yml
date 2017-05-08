@@ -2,7 +2,7 @@
 
 - name: Place uwsgi ini file for application
   template:
-    src: uwsgi.ini
+    src: uwsgi.j2
     dest: "{{ emperor_vassals_dir }}/{{ application_name }}.ini"
     mode: 0644
   notify: restart the uwsgi emperor

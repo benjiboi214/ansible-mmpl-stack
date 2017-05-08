@@ -18,10 +18,10 @@ processes = 5
 buffer-size = 32768
 max-requests = 5000
 
-logto = {{ application_log_dir }}/uwsgi/{{ application_name }}.log
+logto = {{ uwsgi_log_dir }}/{{ application_name }}.log
 log-date = true
 logfile-chown = {{ webapp_user }}
 
 env=LANG=en_AU.UTF-8
 env=LC_ALL=en_AU.UTF-8
-env=DJANGO_SETTINGS_MODULE=mmpl.settings.{{ project_env }}
+env=DJANGO_SETTINGS_MODULE={{ django_settings_file }}
