@@ -12,7 +12,7 @@
   when: nginx_status.stat.exists
 
 - name: Install certbot and generate cert
-  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ inventory_hostname }}"
+  command: "{{ certbot_script }} certonly --staging --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ inventory_hostname }}"
   args:
     creates: "{{ certbot_output_dir }}"
 

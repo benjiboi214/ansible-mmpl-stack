@@ -49,6 +49,7 @@ db_app_user: "{{ application_name }}"
 db_name: "{{ application_name }}_{{ project_env }}"
 
 # Django environment settings
+django_user: ben
 django_settings_file: "{{ application_name }}.settings.{{ project_env }}"
 django_environment:
   DJANGO_SETTINGS_MODULE: "{{ django_settings_file }}"
