@@ -10,7 +10,7 @@
   vars_files:
     - env_vars/base.yml
     - env_vars/{{ env }}.yml
-    - env_vars/django_secrets.yml
+    - env_vars/{{ env }}_django_secrets.yml
 
   roles:
     - { role: base, create_swap_file: yes }

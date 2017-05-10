@@ -3,4 +3,4 @@
 env=production
 
 [webservers]
-ansible.bennyda.ninja
+production.bennyda.ninja

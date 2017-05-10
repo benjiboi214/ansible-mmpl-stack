@@ -1,0 +1,6 @@
+# staging
+[webservers:vars]
+env=staging
+
+[webservers]
+staging.bennyda.ninja

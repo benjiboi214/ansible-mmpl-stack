@@ -1,5 +1,5 @@
 ---
-# Run from cmd: ansible-playbook --vault-password-file secrets/vault_password.txt -i production -v webservers.yml
+# Run from cmd: ansible-playbook --vault-password-file secrets/vault_password.txt -i staging -v webservers.yml
 
 # Application env settings
 project_env: "{{ env }}"

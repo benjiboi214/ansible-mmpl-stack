@@ -36,10 +36,22 @@ def require_environment():
 
 @task
 def production():
-    """Production server settings. Must be first task!"""
-    env.hosts = ['ansible.bennyda.ninja']
+    """Staging server settings. Must be first task!"""
+    env.hosts = ['production.bennyda.ninja']
     env.app = 'mmpl'
     env.environment = 'production'
+    env.user = 'root'
+    env.django_user = 'ben'
+    env.path = '/var/www/%(app)s/%(environment)s' % env
+    env.media = '/media/%(app)s/%(environment)s' % env
+
+
+@task
+def staging():
+    """Production server settings. Must be first task!"""
+    env.hosts = ['staging.bennyda.ninja']
+    env.app = 'mmpl'
+    env.environment = 'staging'
     env.user = 'root'
     env.django_user = 'ben'
     env.path = '/var/www/%(app)s/%(environment)s' % env
@@ -76,9 +88,9 @@ def provision_host():
         run('apt-get update && apt-get upgrade')
 
     local("ansible-playbook \
-          -i production \
+          -i %(environment)s \
           --vault-password-file secrets/vault_password.txt \
-          -v webservers.yml")
+          -v webservers.yml" % env)
 
     # rsync_static_files() # Implement this
     create_django_superuser()
