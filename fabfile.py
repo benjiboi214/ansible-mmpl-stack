@@ -87,13 +87,13 @@ def provision_host():
     with settings(prompts={'Do you want to continue? [Y/n] ': 'Y'}):
         run('apt-get update && apt-get upgrade')
 
-    run_ansible_playbook()
+    run_ansible()
 
     create_django_superuser()
 
 
 @task
-def run_ansible_playbook():
+def run_ansible():
     require_environment()
     local("ansible-playbook \
           -i %(environment)s \
