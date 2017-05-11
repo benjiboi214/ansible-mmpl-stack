@@ -15,6 +15,13 @@
   command: "{{ certbot_script }} certonly --staging --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ inventory_hostname }}"
   args:
     creates: "{{ certbot_output_dir }}"
+  when: certbot_staging_cert
+
+- name: Install certbot and generate cert
+  command: "{{ certbot_script }} certonly --noninteractive --agree-tos --standalone --email {{ certbot_admin_email }} -d {{ inventory_hostname }}"
+  args:
+    creates: "{{ certbot_output_dir }}"
+  when: not certbot_staging_cert
 
 - name: Ensure Nginx is started
   service: name=nginx state=started

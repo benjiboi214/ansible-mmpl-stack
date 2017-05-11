@@ -16,6 +16,7 @@ app_admin_email: !vault |
 
 
 # Certbot settings (certbot)
+certbot_staging_cert: no
 certbot_admin_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   63666365623732376462643837386164326435383435323333326362306435366538633733313062

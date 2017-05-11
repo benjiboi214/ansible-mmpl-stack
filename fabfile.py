@@ -87,13 +87,18 @@ def provision_host():
     with settings(prompts={'Do you want to continue? [Y/n] ': 'Y'}):
         run('apt-get update && apt-get upgrade')
 
+    run_ansible_playbook()
+
+    create_django_superuser()
+
+
+@task
+def run_ansible_playbook():
+    require_environment()
     local("ansible-playbook \
           -i %(environment)s \
           --vault-password-file secrets/vault_password.txt \
           -v webservers.yml" % env)
-
-    # rsync_static_files() # Implement this
-    create_django_superuser()
 
 
 @task
