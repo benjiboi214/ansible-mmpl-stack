@@ -15,6 +15,13 @@ app_admin_email: !vault |
   63643161643764663863626261383463623438393132326361656166613763653235
 
 
+# Domain settings (certbot|nginx)
+app_domains:
+  - "production.bennyda.ninja"
+  #- "www.mmpl.org.au"
+  #- "mmpl.org.au"
+
+
 # Certbot settings (certbot)
 certbot_staging_cert: no
 certbot_admin_email: !vault |
