@@ -1,24 +1,16 @@
-upstream {{ application_name }}_wsgi_server {
-  # fail_timeout=0 means we always retry an upstream even if it failed
-  # to return a good HTTP response (in case the Unicorn master nukes a
-  # single worker for timing out).
-
-  server unix:{{ uwsgi_socket }} fail_timeout=0;
-}
-
 server {
     listen      80;
-    server_name {{ nginx_server_name }};
+    server_name {{ item }};
     rewrite     ^ https://$server_name$request_uri? permanent;
 }
 
 server {
     listen              443;
-    server_name         {{ nginx_server_name }};
+    server_name         {{ item }};
     ssl on;
     {% if nginx_use_letsencrypt %}
-    ssl_certificate     {{ letsencrypt_dir }}/{{ letsencrypt_cert_filename }};
-    ssl_certificate_key {{ letsencrypt_dir }}/{{ letsencrypt_privkey_filename }};
+    ssl_certificate     {{ letsencrypt_dir }}/{{ item }}/{{ letsencrypt_cert_filename }};
+    ssl_certificate_key {{ letsencrypt_dir }}/{{ item }}/{{ letsencrypt_privkey_filename }};
     {% else %}
     ssl_certificate     {{ nginx_ssl_dest_dir }}/{{ application_name }}.crt;
     ssl_certificate_key {{ nginx_ssl_dest_dir }}/{{ application_name }}.key;
@@ -57,7 +49,7 @@ server {
         # Try to serve static files from nginx, no point in making an
         # *application* server like Unicorn/Rainbows! serve static files.
         if (!-f $request_filename) {
-            uwsgi_pass {{ application_name }}_wsgi_server;
+            uwsgi_pass {{ nginx_upstream_name }};
             break;
         }
     }

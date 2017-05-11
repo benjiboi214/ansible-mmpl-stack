@@ -15,7 +15,14 @@ app_admin_email: !vault |
   63643161643764663863626261383463623438393132326361656166613763653235
 
 
+# Domain settings (certbot|nginx)
+app_domains:
+  - "staging.bennyda.ninja"
+  - "test.bennyda.ninja"
+
+
 # Certbot settings (certbot)
+certbot_staging_cert: yes
 certbot_admin_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   63666365623732376462643837386164326435383435323333326362306435366538633733313062
