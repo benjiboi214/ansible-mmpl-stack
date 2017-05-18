@@ -18,8 +18,8 @@ app_admin_email: !vault |
 # Domain settings (certbot|nginx)
 app_domains:
   - "production.bennyda.ninja"
-  #- "www.mmpl.org.au"
-  #- "mmpl.org.au"
+  - "www.mmpl.org.au"
+  - "mmpl.org.au"
 
 
 # Certbot settings (certbot)
