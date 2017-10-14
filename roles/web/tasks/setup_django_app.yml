@@ -11,6 +11,16 @@
     dest: "{{ site_path }}/{{ application_name }}/settings/{{ project_env }}_secrets.py"
     mode: 0755
 
+- name: Run Django make migrations
+  django_manage:
+    command: makemigrations
+    app_path: "{{ site_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+    settings: "{{ django_settings_file }}"
+  environment: "{{ django_environment }}"
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.migrate
+
 - name: Run Django database migrations
   django_manage:
     command: migrate
@@ -20,6 +30,16 @@
   environment: "{{ django_environment }}"
   when: run_django_db_migrations is defined and run_django_db_migrations
   tags: django.migrate
+
+- name: Create Cache Table
+  django_manage:
+    command: createcachetable
+    app_path: "{{ site_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+    settings: "{{ django_settings_file }}"
+  environment: "{{ django_environment }}"
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.cache
 
 - name: Run Django collectstatic
   django_manage:

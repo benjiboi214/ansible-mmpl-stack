@@ -13,6 +13,7 @@
     - "{{ nginx_media_dir }}"
     - "{{ project_path }}"
     - "{{ app_template_path }}"
+    - "{{ gmaps_image_dir }}"
 
 - name: Setup 0770 Directories.
   file:
@@ -25,3 +26,12 @@
   with_items:
     - "{{ nginx_log_dir }}"
     - "{{ uwsgi_log_dir }}"
+    - "{{ django_log_dir }}"
+
+- name: Touch Django Log File
+  file:
+    path: "{{ django_log_dir }}/mmpl.log"
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_group }}"
+    state: touch
+    mode: 0770
